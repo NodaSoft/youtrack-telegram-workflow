@@ -281,7 +281,7 @@ var telegramNotifier = {
         // Check assignee changes
         if (this.issue.isChanged('assignee')) {
             const oldAssignee = this.issue.oldValue("Assignee");
-            const oldAssigneeName = oldAssignee ? oldAssignee.name : "unassigned";
+            const oldAssigneeName = oldAssignee ? oldAssignee.fullName : "unassigned";
 
             if (this.currentAssignee) {
                 text += "\nAssignee: " + oldAssigneeName +
