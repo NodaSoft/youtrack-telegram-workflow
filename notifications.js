@@ -189,10 +189,21 @@ var telegramNotifier = {
 
         this.issue.comments.forEach(function(comment) {
             if (comment.isNew) {
-                text += "\n\n" + comment.text + " [🔗](" + comment.url + ")" +
-                    "\n© _" + comment.author.visibleName + "_";
+                text += "\n\n" + comment.text + " [link](" + comment.url + ")";
+                let attachments = comment.attachments;
+                if (attachments.isNotEmpty()) {
+                    attachments.forEach(attachment => {
+                        text = text.replace("![](" + attachment.name + ")", "");
+                        text = text.replace("\n\n", "\n");
+                        text += "\n[📁" + attachment.name + "](" + attachment.fileUrl + ")";
+                        // https://www.jetbrains.com/help/youtrack/devportal/resource-api-issues-issueID-attachments.html#IssueAttachment-supported-fields
+                    });
+                }
+
+                text += "\n© _" + comment.author.visibleName + "_";
             }
         });
+
 
         return text;
     },
